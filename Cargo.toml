@@ -1,0 +1,11 @@
+[package]
+name = "polygon-viewer"
+version = "0.1.0"
+authors = ["David LeGare <excaliburhissheath@gmail.com>"]
+
+[dependencies]
+collaborate = { git = "https://github.com/randomPoison/COLLABORATE" }
+gl-winit = { path = "../polygon/gl-winit" }
+image = "0.15"
+polygon = { path = "../polygon" }
+winit = "0.7"
