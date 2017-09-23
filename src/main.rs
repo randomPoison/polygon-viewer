@@ -2,6 +2,9 @@ extern crate collaborate;
 extern crate gl_winit;
 extern crate image;
 extern crate polygon;
+extern crate structopt;
+#[macro_use]
+extern crate structopt_derive;
 extern crate winit;
 
 use gl_winit::CreateContext;
@@ -12,12 +15,26 @@ use polygon::gl::GlRender;
 use polygon::light::*;
 use polygon::math::*;
 use polygon::mesh_instance::*;
+use std::path::PathBuf;
 use std::time::*;
+use structopt::StructOpt;
 use winit::*;
 
 mod collada;
 
+#[derive(Debug, StructOpt)]
+#[structopt(name = "polyview", about = "A mesh viewer for the Polygon rendering engine.")]
+struct CliArgs {
+    #[structopt(help = "The path to the mesh to be viewed")]
+    path: String,
+}
+
 fn main() {
+    let args = CliArgs::from_args();
+
+    // Build a triangle mesh.
+    let mesh = collada::load_mesh(args.path).unwrap();
+
     // Open a window.
     let mut events_loop = EventsLoop::new();
     let window = WindowBuilder::new()
@@ -28,9 +45,6 @@ fn main() {
     // Create the OpenGL context and the renderer.
     let context = window.create_context().expect("Failed to create GL context");
     let mut renderer = GlRender::new(context).expect("Failed to create GL renderer");
-
-    // Build a triangle mesh.
-    let mesh = collada::load_mesh("resources/blender_cube.dae").unwrap();
 
     // Send the mesh to the GPU.
     let gpu_mesh = renderer.register_mesh(&mesh);

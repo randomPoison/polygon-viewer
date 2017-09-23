@@ -5,7 +5,9 @@ authors = ["David LeGare <excaliburhissheath@gmail.com>"]
 
 [dependencies]
 collaborate = { git = "https://github.com/randomPoison/COLLABORATE" }
-gl-winit = { path = "../polygon/gl-winit" }
+gl-winit = { git = "https://github.com/randomPoison/polygon" }
 image = "0.15"
-polygon = { path = "../polygon" }
+polygon = { git = "https://github.com/randomPoison/polygon" }
+structopt = "0.1"
+structopt-derive = "0.1"
 winit = "0.7"
